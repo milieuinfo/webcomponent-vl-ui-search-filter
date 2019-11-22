@@ -1,0 +1,48 @@
+{
+  "name": "vl-search-filter",
+  "version": "0.0.0",
+  "description": "\"vl-ui-search-filter\" UI component van Webuniversum Vlaanderen als Web Component",
+  "scripts": {
+    "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
+    "prepare:util": "npm explore vl-ui-util -- npm run util",
+    "test": "wct -l chrome --npm -p",
+    "release": "np",
+    "release:prepare": "npm run release:prepare:build && npm run release:prepare:imports && npm run release:prepare:css && npm run release:prepare:commit",
+    "release:prepare:build": "uglifyjs --compress --mangle --output vl-search-filter.js -- *.src.js",
+    "release:prepare:imports": "replace '/node_modules/vl-ui-core/vl-core.src.js' '/node_modules/vl-ui-core/vl-core.js' vl-search-filter.js",
+    "release:prepare:css": "replace '\\.\\./style.css' '/node_modules/vl-ui-search-filter/style.css' vl-search-filter.js",
+    "release:prepare:commit": "git add -f vl-search-filter.js && git commit --amend --no-edit && git pull",
+    "release:testless": "np --yolo",
+    "demo": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milieuinfo/webcomponent-vl-search-filter.git"
+  },
+  "author": "DIDM",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/milieuinfo/webcomponent-vl-search-filter/issues"
+  },
+  "homepage": "https://github.com/milieuinfo/webcomponent-vl-search-filter#readme",
+  "dependencies": {
+    "vl-ui-core": "^2.0.0",
+    "replace": "^1.1.1"
+  },
+  "devDependencies": {
+    "@govflanders/vl-ui-util": "^3.9.1",
+    "@govflanders/vl-ui-search-filter": "^3.9.1",
+    "http-server": "0.11.1",
+    "np": "3.0.4",
+    "uglify-js-es6": "2.8.9",
+    "vl-ui-button": "^1.3.1",
+    "vl-ui-input-field": "^1.1.2",
+    "vl-ui-select": "^2.0.1",
+    "vl-ui-util": "^2.0.13",
+    "wct-browser-legacy": "1.0.2",
+    "web-component-tester": "6.9.2"
+  },
+  "publishConfig": {
+    "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
+  }
+}

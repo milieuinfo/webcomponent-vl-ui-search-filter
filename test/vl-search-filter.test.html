@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <script type="module" src="../vl-search-filter.src.js"></script>
+</head>
+
+<body>
+  <test-fixture id="vl-search-filter-fixture">
+    <template>
+      <div is="vl-search-filter"></div>
+    </template>
+  </test-fixture>
+  <test-fixture id="vl-search-filter-fixture-title">
+    <template>
+      <div is="vl-search-filter" title="Zoeken..."></div>
+    </template>
+  </test-fixture>
+  <test-fixture id="vl-search-filter-fixture-form">
+    <template>
+      <div is="vl-search-filter">
+        <form>
+          <section>
+            <h2>Test</h2>
+            <div>
+              <label is="form-label">Naam</label>
+            </div>
+          </section>
+        </form>
+      </div>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('vl-search-filter', () => {
+      const should = chai.should();
+
+      test('heeft de vl-search-filter class', () => {
+        const element = fixture('vl-search-filter-fixture');
+        assert.isTrue(element.classList.contains('vl-search-filter'));
+      });
+
+      test('krijgt de juiste class wanneer het element alt bevat', () => {
+        const searchFilter = fixture('vl-search-filter-fixture');
+        assert.isFalse(searchFilter.classList.contains('vl-search-filter--alt'));
+        searchFilter.setAttribute('alt', '');
+        assert.isTrue(searchFilter.classList.contains('vl-search-filter--alt'));
+        searchFilter.removeAttribute('alt');
+        assert.isFalse(searchFilter.classList.contains('vl-search-filter--alt'));
+      });
+
+      test('krijgt de juiste classes bij een form section title field en label', () => {
+        const searchFilter = fixture('vl-search-filter-fixture-form');
+
+        assert.include(Array.from(searchFilter.querySelector('form').classList), 'vl-search-filter__form');
+        assert.include(Array.from(searchFilter.querySelector('section').classList), 'vl-search-filter__section');
+        assert.include(Array.from(searchFilter.querySelector('h2').classList), 'vl-search-filter__section-title');
+        assert.include(Array.from(searchFilter.querySelector('section > div').classList), 'vl-search-filter__field');
+        assert.include(Array.from(searchFilter.querySelector('label').classList), 'vl-search-filter__field__label');
+      });
+
+      test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
+        const searchFilter = fixture('vl-search-filter-fixture');
+
+        searchFilter.setAttribute('title', 'Nieuwe zoekopdracht');
+
+        assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
+      });
+
+      test('als de title gewijzigd wordt, zal de textcontent hiervan ook veranderen', () => {
+        const searchFilter = fixture('vl-search-filter-fixture-title');
+        assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
+
+        searchFilter.setAttribute('title', 'Nieuwe zoekopdracht');
+
+        assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
+      });
+    });
+  </script>
+</body>
+
+</html>

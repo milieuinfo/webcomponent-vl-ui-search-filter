@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="js">
+	<head>
+        <title>vl-search-filter voorbeeld</title>
+        <script type="module" src="demo.js"></script>
+        <script type="module" src="../vl-search-filter.src.js"></script>
+        <script type="module" src="../node_modules/vl-ui-input-field/vl-input-field.js"></script>
+        <script type="module" src="../node_modules/vl-ui-select/vl-select.js"></script>
+        <script type="module" src="../node_modules/vl-ui-button/vl-button.js"></script>
+        <script type="module" src="../node_modules/vl-ui-link/vl-link.js"></script>
+    </head>
+
+	<body>
+
+    <h1>vl-ui-search-filter demo</h1>
+
+    <div>
+      <h2>Search filter</h2>
+      <pre>
+          <code class="line-numbers language-markup">
+          &#x3C;div is=&#x22;vl-search-filter&#x22; title=&#x22;Verfijn uw zoekopdracht&#x22;&#x3E;
+            &#x3C;form&#x3E;
+              &#x3C;section&#x3E;
+                &#x3C;h2&#x3E;Gegevens&#x3C;/h2&#x3E;
+                &#x3C;div&#x3E;
+                  &#x3C;label is=&#x22;form-label&#x22; for=&#x22;firstname&#x22;&#x3E;Voornaam&#x3C;/label&#x3E;
+                  &#x3C;input is=&#x22;vl-input-field&#x22; type=&#x22;text&#x22; id=&#x22;firstname&#x22; name=&#x22;firstname&#x22; value=&#x22;&#x22; block/&#x3E;
+                &#x3C;/div&#x3E;
+                &#x3C;div&#x3E;
+                  &#x3C;label is=&#x22;form-label&#x22; for=&#x22;name&#x22;&#x3E;Naam&#x3C;/label&#x3E;
+                  &#x3C;input is=&#x22;vl-input-field&#x22; type=&#x22;text&#x22; id=&#x22;name&#x22; name=&#x22;name&#x22; value=&#x22;&#x22; block/&#x3E;
+                &#x3C;/div&#x3E;
+              &#x3C;/section&#x3E;
+              &#x3C;section&#x3E;
+                &#x3C;h2&#x3E;Locatie&#x3C;/h2&#x3E;
+                &#x3C;div&#x3E;
+                  &#x3C;label is=&#x22;form-label&#x22; for=&#x22;vl-select-city&#x22;&#x3E;Stad&#x3C;/label&#x3E;
+                  &#x3C;select is=&#x22;vl-select&#x22; name=&#x22;vl-select-default&#x22; id=&#x22;vl-select-city&#x22; tabindex=&#x22;0&#x22; data-vl-select-deletable block&#x3E;
+                    &#x3C;option placeholder&#x3E;Kies een stad&#x3C;/option&#x3E;
+                    &#x3C;option value=&#x22;&#x22;&#x3E;Brussel&#x3C;/option&#x3E;
+                    &#x3C;option value=&#x22;&#x22;&#x3E;Gent&#x3C;/option&#x3E;
+                  &#x3C;/select&#x3E;
+                &#x3C;/div&#x3E;
+                &#x3C;div&#x3E;
+                  &#x3C;label is=&#x22;form-label&#x22; for=&#x22;vl-select-country&#x22;&#x3E;Land&#x3C;/label&#x3E;
+                  &#x3C;select is=&#x22;vl-select&#x22; name=&#x22;vl-select-default&#x22; id=&#x22;vl-select-country&#x22; tabindex=&#x22;0&#x22; data-vl-select-deletable block&#x3E;
+                    &#x3C;option placeholder&#x3E;Kies een land&#x3C;/option&#x3E;
+                    &#x3C;option value=&#x22;&#x22;&#x3E;Belgi&#xEB;&#x3C;/option&#x3E;
+                  &#x3C;/select&#x3E;
+                &#x3C;/div&#x3E;
+              &#x3C;/section&#x3E;
+              &#x3C;div&#x3E;
+                &#x3C;button is=&#x22;vl-button&#x22; type=&#x22;submit&#x22;&#x3E;
+                  Zoeken
+                &#x3C;/button&#x3E;
+              &#x3C;/div&#x3E;
+            &#x3C;/form&#x3E;
+            &#x3C;div footer&#x3E;
+              &#x3C;a href=&#x22;#&#x22; is=&#x22;vl-link&#x22;&#x3E;Zoekopdracht verwijderen&#x3C;/a&#x3E;
+            &#x3C;/div&#x3E;
+          &#x3C;/div&#x3E;
+          </code>
+        </pre>
+      <div class="demo">
+        <div is="vl-search-filter" title="Verfijn uw zoekopdracht">
+          <form>
+            <section>
+              <h2>Gegevens</h2>
+              <div>
+                <label is="form-label" for="firstname">Voornaam</label>
+                <input is="vl-input-field" type="text" id="firstname" name="firstname" value="" block/>
+              </div>
+              <div>
+                <label is="form-label" for="name">Naam</label>
+                <input is="vl-input-field" type="text" id="name" name="name" value="" block/>
+              </div>
+            </section>
+            <section>
+              <h2>Locatie</h2>
+              <div>
+                <label is="form-label" for="vl-select-city">Stad</label>
+                <select is="vl-select" name="vl-select-default" id="vl-select-city" tabindex="0" data-vl-select-deletable block>
+                  <option placeholder>Kies een stad</option>
+                  <option value="">Brussel</option>
+                  <option value="">Gent</option>
+                </select>
+              </div>
+              <div>
+                <label is="form-label" for="vl-select-country">Land</label>
+                <select is="vl-select" name="vl-select-default" id="vl-select-country" tabindex="0" data-vl-select-deletable block>
+                  <option placeholder>Kies een land</option>
+                  <option value="">België</option>
+                </select>
+              </div>
+            </section>
+            <div>
+              <button is="vl-button" type="submit">
+                Zoeken
+              </button>
+            </div>
+          </form>
+          <div footer>
+            <a href="#" is="vl-link">Zoekopdracht verwijderen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Search filter alternatieve achtergrond</h2>
+      <pre>
+          <code class="line-numbers language-markup">
+          &#x3C;div is=&#x22;vl-search-filter&#x22; title=&#x22;Verfijn uw zoekopdracht&#x22; alt&#x3E;
+          ...
+          &#x3C;/div&#x3E;
+          </code>
+        </pre>
+      <div class="demo">
+        <div is="vl-search-filter" title="Verfijn uw zoekopdracht" alt>
+          <form>
+            <section>
+              <h2>Gegevens</h2>
+              <div>
+                <label is="form-label" for="firstname2">Voornaam</label>
+                <input is="vl-input-field" type="text" id="firstname2" name="firstname2" value="" block/>
+              </div>
+              <div>
+                <label is="form-label" for="name2">Naam</label>
+                <input is="vl-input-field" type="text" id="name2" name="name2" value="" block/>
+              </div>
+            </section>
+            <section>
+              <h2>Locatie</h2>
+              <div>
+                <label is="form-label" for="vl-select-city2">Stad</label>
+                <select is="vl-select" name="vl-select-default" id="vl-select-city2" tabindex="0" data-vl-select-deletable block>
+                  <option placeholder>Kies een stad</option>
+                  <option value="">Brussel</option>
+                  <option value="">Gent</option>
+                </select>
+              </div>
+              <div>
+                <label is="form-label" for="vl-select-country2">Land</label>
+                <select is="vl-select" name="vl-select-default" id="vl-select-country2" tabindex="0" data-vl-select-deletable block>
+                  <option placeholder>Kies een land</option>
+                  <option value="">België</option>
+                </select>
+              </div>
+            </section>
+            <div>
+              <button is="vl-button" type="submit">
+                Zoeken
+              </button>
+            </div>
+          </form>
+          <div footer>
+            <a href="#" is="vl-link">Zoekopdracht verwijderen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
