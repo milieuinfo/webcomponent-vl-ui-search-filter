@@ -1,5 +1,5 @@
 {
-  "name": "vl-search-filter",
+  "name": "vl-ui-search-filter",
   "version": "0.0.0",
   "description": "\"vl-ui-search-filter\" UI component van Webuniversum Vlaanderen als Web Component",
   "scripts": {
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/milieuinfo/webcomponent-vl-search-filter.git"
+    "url": "git+https://github.com/milieuinfo/webcomponent-vl-ui-search-filter.git"
   },
   "author": "DIDM",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/milieuinfo/webcomponent-vl-search-filter/issues"
+    "url": "https://github.com/milieuinfo/webcomponent-vl-ui-search-filter/issues"
   },
-  "homepage": "https://github.com/milieuinfo/webcomponent-vl-search-filter#readme",
+  "homepage": "https://github.com/milieuinfo/webcomponent-vl-ui-search-filter#readme",
   "dependencies": {
     "vl-ui-core": "^2.0.0",
     "replace": "^1.1.1"
