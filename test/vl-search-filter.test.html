@@ -17,7 +17,7 @@
   </test-fixture>
   <test-fixture id="vl-search-filter-fixture-title">
     <template>
-      <div is="vl-search-filter" title="Zoeken..."></div>
+      <div is="vl-search-filter" data-vl-title="Zoeken..."></div>
     </template>
   </test-fixture>
   <test-fixture id="vl-search-filter-fixture-form">
@@ -66,7 +66,7 @@
       test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
         const searchFilter = fixture('vl-search-filter-fixture');
 
-        searchFilter.setAttribute('title', 'Nieuwe zoekopdracht');
+        searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
 
         assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
       });
@@ -75,7 +75,7 @@
         const searchFilter = fixture('vl-search-filter-fixture-title');
         assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
 
-        searchFilter.setAttribute('title', 'Nieuwe zoekopdracht');
+        searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
 
         assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
       });

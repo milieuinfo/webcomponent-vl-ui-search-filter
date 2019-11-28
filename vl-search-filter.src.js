@@ -7,7 +7,8 @@ import {NativeVlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
  *
  * @extends VlElement
  *
- * @property title - De titel van deze search filter.
+ * @property data-vl-title - De titel van deze search filter.
+ * @property data-vl-alt - Alternatieve (transparante) achtergrond.
  *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/issues|Issues}
@@ -17,14 +18,14 @@ import {NativeVlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
 
   static get _observedAttributes() {
-    return ['title'];
+    return ['data-vl-title'];
   }
 
   static get _observedClassAttributes() {
-    return ['alt']
+    return ['alt'];
   }
 
-  _titleChangedCallback(oudeWaarde, nieuweWaarde) {
+  _data_vl_titleChangedCallback(oudeWaarde, nieuweWaarde) {
     const titleElement = this.querySelector('p.' + this._elementPrefix + 'intro');
     if (titleElement != null) {
       titleElement.textContent = nieuweWaarde;
