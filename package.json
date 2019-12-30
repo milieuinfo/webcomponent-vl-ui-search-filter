@@ -1,7 +1,7 @@
 {
   "name": "vl-ui-search-filter",
   "version": "0.0.1",
-  "description": "\"vl-ui-search-filter\" UI component van Webuniversum Vlaanderen als Web Component",
+  "description": "De search filter laat de gebruiker toe om de zoekresulten te verfijnen.",
   "scripts": {
     "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
     "prepare:util": "npm explore vl-ui-util -- npm run util",

@@ -1,6 +1,7 @@
 # vl-search-filter
 ![GitHub issues](https://img.shields.io/github/issues-raw/milieuinfo/webcomponent-vl-ui-search-filter) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/milieuinfo/webcomponent-vl-ui-search-filter) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/milieuinfo/webcomponent-vl-ui-search-filter)
-"vl-ui-search-filter" UI component van Webuniversum Vlaanderen als Web Component
+
+De search filter laat de gebruiker toe om de zoekresulten te verfijnen.
 
 ## Installatie
 ```
