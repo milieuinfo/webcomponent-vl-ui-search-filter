@@ -15,11 +15,13 @@
       <div is="vl-search-filter"></div>
     </template>
   </test-fixture>
+
   <test-fixture id="vl-search-filter-fixture-title">
     <template>
       <div is="vl-search-filter" data-vl-title="Zoeken..."></div>
     </template>
   </test-fixture>
+
   <test-fixture id="vl-search-filter-fixture-form">
     <template>
       <div is="vl-search-filter">
@@ -31,6 +33,9 @@
             </div>
           </section>
         </form>
+        <div>
+          <a href="#" is="vl-link">Zoekopdracht verwijderen</a>
+        </div>
       </div>
     </template>
   </test-fixture>
@@ -55,28 +60,24 @@
 
       test('krijgt de juiste classes bij een form section title field en label', () => {
         const searchFilter = fixture('vl-search-filter-fixture-form');
-
         assert.include(Array.from(searchFilter.querySelector('form').classList), 'vl-search-filter__form');
         assert.include(Array.from(searchFilter.querySelector('section').classList), 'vl-search-filter__section');
-        assert.include(Array.from(searchFilter.querySelector('h2').classList), 'vl-search-filter__section-title');
+        assert.include(Array.from(searchFilter.querySelector('section > h2').classList), 'vl-search-filter__section-title');
         assert.include(Array.from(searchFilter.querySelector('section > div').classList), 'vl-search-filter__field');
-        assert.include(Array.from(searchFilter.querySelector('label').classList), 'vl-search-filter__field__label');
+        assert.include(Array.from(searchFilter.querySelector('section > div > label').classList), 'vl-search-filter__field__label');
+        assert.include(Array.from(searchFilter.querySelector('form ~ div').classList), 'vl-search-filter__footer');
       });
 
       test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
         const searchFilter = fixture('vl-search-filter-fixture');
-
         searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
-
         assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
       });
 
       test('als de title gewijzigd wordt, zal de textcontent hiervan ook veranderen', () => {
         const searchFilter = fixture('vl-search-filter-fixture-title');
         assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
-
         searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
-
         assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
       });
     });
