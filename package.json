@@ -1,6 +1,6 @@
 {
   "name": "vl-ui-search-filter",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "De search filter laat de gebruiker toe om de zoekresulten te verfijnen.",
   "scripts": {
     "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
