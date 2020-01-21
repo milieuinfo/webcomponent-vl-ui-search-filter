@@ -46,7 +46,7 @@
     "vl-ui-button": "^2.0.1",
     "vl-ui-input-field": "^1.1.2",
     "vl-ui-select": "^2.0.1",
-    "vl-ui-util": "^3.4.2"
+    "vl-ui-util": "^3.4.4"
   },
   "publishConfig": {
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
