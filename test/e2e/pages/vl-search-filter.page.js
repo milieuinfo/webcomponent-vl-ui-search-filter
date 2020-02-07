@@ -1,6 +1,5 @@
 const VlSearchFilter = require('../components/vl-search-filter');
-const { Page } = require('vl-ui-core');
-const { Config } = require('vl-ui-core');
+const { Page, Config } = require('vl-ui-core').Test;
 
 class VlSearchFilterPage extends Page {
     async _getSearchFilter(selector) {

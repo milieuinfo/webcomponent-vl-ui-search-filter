@@ -1,5 +1,5 @@
 
-const { assert, driver } = require('vl-ui-core').Test;
+const { assert, driver } = require('vl-ui-core').Test.Setup;
 const VlSearchFilterPage = require('./pages/vl-search-filter.page');
 
 describe('vl-search-filter', async () => {
@@ -7,6 +7,10 @@ describe('vl-search-filter', async () => {
 
     before(() => {
         return vlSearchFilterPage.load()
+    });
+
+    after(async () => {
+        return driver.quit();
     });
 
 });
