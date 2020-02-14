@@ -43,7 +43,7 @@
     "release:prepare:build": "npm run release:prepare:build:es6 && npm run release:prepare:build:es6:min && npm run release:prepare:build:node",
     "release:prepare:build:es6": "npm run release:prepare:build:es6:copy && npm run release:prepare:build:es6:replace",
     "release:prepare:build:es6:copy": "cp -R -f ./src/*.src.js ./vl-search-filter.js",
-    "release:prepare:build:es6:replace": "replace '\\.\\./style.css' '/node_modules/vl-ui-search-filter/style.css' vl-search-filter.js",
+    "release:prepare:build:es6:replace": "replace \"'/style.css'\" \"'/node_modules/vl-ui-search-filter/style.css'\" vl-search-filter.js",
     "release:prepare:build:es6:min": "npm run release:prepare:build:es6:min:copy && npm run release:prepare:build:es6:min:explode && npm run release:prepare:build:es6:min:minify",
     "release:prepare:build:es6:min:copy": "cp -R -f ./src/*.src.js ./vl-search-filter.tmp.min.js",
     "release:prepare:build:es6:min:explode": "npm explore vl-ui-util -- npm run explode -- --fileName=vl-search-filter.tmp.min.js",
@@ -61,12 +61,15 @@
   "dependencies": {
     "vl-ui-core": "^4.0.0"
   },
+  "peerDependencies": {
+    "vl-ui-core": "^4.0.0"
+  },
   "devDependencies": {
     "@govflanders/vl-ui-search-filter": "^3.9.1",
     "@govflanders/vl-ui-util": "^3.9.1",
-    "vl-ui-button": "^3.0.0",
-    "vl-ui-input-field": "^2.0.0",
-    "vl-ui-select": "^3.0.0",
-    "vl-ui-util": "^4.0.1"
+    "vl-ui-button": "^3.0.1",
+    "vl-ui-input-field": "^2.0.1",
+    "vl-ui-select": "^3.0.1",
+    "vl-ui-util": "^4.0.3"
   }
 }
