@@ -9,8 +9,8 @@ describe('vl-search-filter', async () => {
         return vlSearchFilterPage.load()
     });
 
-    after(async () => {
-        return driver.quit();
+    it("Dummy test om browsers te sluiten", () => {
+    	assert.isTrue(true);
     });
 
 });
