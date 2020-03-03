@@ -1,6 +1,16 @@
 const { VlElement } = require('vl-ui-core').Test;
-
-class VlSearchFilter extends VlElement {  
+const { By } = require('selenium-webdriver');
+class VlSearchFilter extends VlElement {
+	
+	async getText() {
+		const title = await this.findElement(By.css("p.vl-search-filter__intro"));
+		return title.getText();
+	}
+	
+	async isAlt() {
+		return this.hasAttribute("alt");
+	}
+	
 }
 
 module.exports = VlSearchFilter;
