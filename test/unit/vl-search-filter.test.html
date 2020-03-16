@@ -47,11 +47,14 @@
           <section>
             <h2>Test</h2>
             <div>
-              <label is="form-label" >Naam</label>
-              <input is="vl-input-field" type="text" name="naam" value=""/>
-              <input is="vl-input-field" type="text" name="voornaam" value="Jos"/>
-              <input type="checkbox" checked name="checkbox" /> 
-            </div>
+                <label is="form-label" >Naam</label>
+                <input is="vl-input-field" type="text" name="naam" value=""/>
+                <input is="vl-input-field" type="text" name="voornaam" value="Jos"/>
+                <input type="checkbox" name="kleur1" checked value="rood" /> 
+                <input type="checkbox" name="kleur2" value="blauw" /> 
+                <input type="radio" name="geslacht" value="man" checked>
+                <input type="radio" name="geslacht" value="vrouw">
+              </div>
           </section>
         </form>
       </div>
@@ -102,9 +105,11 @@
       test('kan alle waarden van de inputvelden van het de search-filter opvragen', () => {
         const searchFilter = fixture('vl-search-filter-name-valuefixture');
         const nameValuePairs = searchFilter.getFilterValues();
-        debugger;
-        // assert.equal(nameValuePairs.keys().length, 3);
-        // assert.equal(nameValuePairs)
+        assert.equal(Object.keys(nameValuePairs).length, 4);
+        assert.equal(nameValuePairs['naam'], "");
+        assert.equal(nameValuePairs['voornaam'], "Jos");
+        assert.equal(nameValuePairs['kleur1'], "rood");
+        assert.equal(nameValuePairs['geslacht'], "man");
       });
     });
   </script>
