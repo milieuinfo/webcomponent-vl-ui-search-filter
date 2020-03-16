@@ -56,6 +56,17 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
   get _elementName() {
     return 'vl-search-filter';
   }
+
+  getFilterValues() {
+    const inputs = this.querySelectorAll('[name]');
+
+    const pairs = {};
+    inputs.forEach(input => {
+      pairs[input.getAttribute('name')] = input.getAttribute('value');
+    });
+
+    return pairs;
+  };
 }
 
 define('vl-search-filter', VlSearchFilter, { extends: 'div' });

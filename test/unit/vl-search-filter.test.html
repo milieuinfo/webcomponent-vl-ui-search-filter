@@ -40,6 +40,24 @@
     </template>
   </test-fixture>
 
+  <test-fixture id="vl-search-filter-name-valuefixture">
+    <template>
+      <div is="vl-search-filter">
+        <form>
+          <section>
+            <h2>Test</h2>
+            <div>
+              <label is="form-label" >Naam</label>
+              <input is="vl-input-field" type="text" name="naam" value=""/>
+              <input is="vl-input-field" type="text" name="voornaam" value="Jos"/>
+              <input type="checkbox" checked name="checkbox" /> 
+            </div>
+          </section>
+        </form>
+      </div>
+    </template>
+  </test-fixture>
+
   <script>
     suite('vl-search-filter', () => {
       const should = chai.should();
@@ -79,6 +97,14 @@
         assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
         searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
         assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
+      });
+
+      test('kan alle waarden van de inputvelden van het de search-filter opvragen', () => {
+        const searchFilter = fixture('vl-search-filter-name-valuefixture');
+        const nameValuePairs = searchFilter.getFilterValues();
+        debugger;
+        // assert.equal(nameValuePairs.keys().length, 3);
+        // assert.equal(nameValuePairs)
       });
     });
   </script>
