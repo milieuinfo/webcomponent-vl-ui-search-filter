@@ -50,7 +50,7 @@
                 <label is="form-label" >Naam</label>
                 <input is="vl-input-field" type="text" name="naam" value=""/>
                 <input is="vl-input-field" type="text" name="voornaam" value="Jos"/>
-                <input type="checkbox" name="kleur1" checked value="rood" /> 
+                <input type="checkbox" name="kleur1" value="rood" checked /> 
                 <input type="checkbox" name="kleur2" value="blauw" /> 
                 <input type="radio" name="geslacht" value="man" checked>
                 <input type="radio" name="geslacht" value="vrouw">
@@ -104,12 +104,13 @@
 
       test('kan alle waarden van de inputvelden van het de search-filter opvragen', () => {
         const searchFilter = fixture('vl-search-filter-name-valuefixture');
-        const nameValuePairs = searchFilter.values;
-        assert.equal(Object.keys(nameValuePairs).length, 4);
-        assert.equal(nameValuePairs['naam'], "");
-        assert.equal(nameValuePairs['voornaam'], "Jos");
-        assert.equal(nameValuePairs['kleur1'], "rood");
-        assert.equal(nameValuePairs['geslacht'], "man");
+        const formData = searchFilter.formData;
+
+        assert.equal(formData.get('naam'), "");
+        assert.equal(formData.get('voornaam'), "Jos");
+        assert.equal(formData.get('kleur1'), "rood");
+        assert.equal(formData.get('kleur2'), null);
+        assert.equal(formData.get('geslacht'), "man");
       });
     });
   </script>

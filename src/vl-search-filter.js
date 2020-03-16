@@ -57,8 +57,8 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
     return 'vl-search-filter';
   }
 
-  get values() {
-    const formData = new FormData(this.querySelector('form'));
+  get formData() {
+    return new FormData(this.querySelector('form'));
     const pairs = {};
     for (let entry of formData.entries()) {
       pairs[entry[0]] = entry[1];
