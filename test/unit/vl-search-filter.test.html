@@ -104,7 +104,7 @@
 
       test('kan alle waarden van de inputvelden van het de search-filter opvragen', () => {
         const searchFilter = fixture('vl-search-filter-name-valuefixture');
-        const nameValuePairs = searchFilter.getFilterValues();
+        const nameValuePairs = searchFilter.values;
         assert.equal(Object.keys(nameValuePairs).length, 4);
         assert.equal(nameValuePairs['naam'], "");
         assert.equal(nameValuePairs['voornaam'], "Jos");
