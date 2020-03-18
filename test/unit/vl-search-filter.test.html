@@ -7,6 +7,7 @@
   <script src="../../../web-component-tester/browser.js"></script>
 
   <script type="module" src="../../src/vl-search-filter.js"></script>
+  <script type="module" src="vl-search-filter-test.js"></script>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
     </template>
   </test-fixture>
 
-  <test-fixture id="vl-search-filter-fixture-form">
+  <test-fixture id="vl-search-filter-form-fixture">
     <template>
       <div is="vl-search-filter">
         <form>
@@ -40,7 +41,25 @@
     </template>
   </test-fixture>
 
-  <test-fixture id="vl-search-filter-name-valuefixture">
+  <test-fixture id="vl-search-filter-form-slot-fixture">
+    <template>
+      <vl-search-filter-test>
+        <form>
+          <section>
+            <h2>Test</h2>
+            <div>
+              <label is="form-label">Naam</label>
+            </div>
+          </section>
+        </form>
+        <div>
+          <a href="#" is="vl-link">Zoekopdracht verwijderen</a>
+        </div>
+      </vl-search-filter-test>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="vl-search-filter-name-value-fixture">
     <template>
       <div is="vl-search-filter">
         <form>
@@ -57,6 +76,26 @@
           </section>
         </form>
       </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="vl-search-filter-name-value-slot-fixture">
+    <template>
+      <vl-search-filter-test>
+        <form>
+          <section>
+            <h2>Test</h2>
+            <div>
+                <input is="vl-input-field" type="text" name="naam" value=""/>
+                <input is="vl-input-field" type="text" name="voornaam" value="Jos"/>
+                <input type="checkbox" name="kleur1" value="rood" checked /> 
+                <input type="checkbox" name="kleur2" value="blauw" /> 
+                <input type="radio" name="geslacht" value="man" checked>
+                <input type="radio" name="geslacht" value="vrouw">
+              </div>
+          </section>
+        </form>
+      </vl-search-filter-test>
     </template>
   </test-fixture>
 
@@ -79,13 +118,16 @@
       });
 
       test('krijgt de juiste classes bij een form section title field en label', () => {
-        const searchFilter = fixture('vl-search-filter-fixture-form');
-        assert.include(Array.from(searchFilter.querySelector('form').classList), 'vl-search-filter__form');
-        assert.include(Array.from(searchFilter.querySelector('section').classList), 'vl-search-filter__section');
-        assert.include(Array.from(searchFilter.querySelector('section > h2').classList), 'vl-search-filter__section-title');
-        assert.include(Array.from(searchFilter.querySelector('section > div').classList), 'vl-search-filter__field');
-        assert.include(Array.from(searchFilter.querySelector('section > div > label').classList), 'vl-search-filter__field__label');
-        assert.include(Array.from(searchFilter.querySelector('form ~ div').classList), 'vl-search-filter__footer');
+        const element = fixture('vl-search-filter-form-fixture');
+        const slot = fixture('vl-search-filter-form-slot-fixture').shadowRoot.querySelector('slot').assignedElements()[0].parentElement;
+        [element, slot].forEach((element) => {
+          assert.include(Array.from(element.querySelector('form').classList), 'vl-search-filter__form');
+          assert.include(Array.from(element.querySelector('section').classList), 'vl-search-filter__section');
+          assert.include(Array.from(element.querySelector('section > h2').classList), 'vl-search-filter__section-title');
+          assert.include(Array.from(element.querySelector('section > div').classList), 'vl-search-filter__field');
+          assert.include(Array.from(element.querySelector('section > div > label').classList), 'vl-search-filter__field__label');
+          assert.include(Array.from(element.querySelector('form ~ div').classList), 'vl-search-filter__footer');
+        });
       });
 
       test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
@@ -102,14 +144,16 @@
       });
 
       test('kan alle waarden van de inputvelden van de search-filter opvragen', () => {
-        const searchFilter = fixture('vl-search-filter-name-valuefixture');
-        const formData = searchFilter.formData;
-
-        assert.equal(formData.get('naam'), "");
-        assert.equal(formData.get('voornaam'), "Jos");
-        assert.equal(formData.get('kleur1'), "rood");
-        assert.equal(formData.get('kleur2'), null);
-        assert.equal(formData.get('geslacht'), "man");
+        const element = fixture('vl-search-filter-name-value-fixture');
+        const slot = fixture('vl-search-filter-name-value-slot-fixture').shadowRoot.querySelector('[is="vl-search-filter"]');
+        [element, slot].forEach((searchFilter) => {
+          const formData = searchFilter.formData;
+          assert.equal(formData.get('naam'), "");
+          assert.equal(formData.get('voornaam'), "Jos");
+          assert.equal(formData.get('kleur1'), "rood");
+          assert.equal(formData.get('kleur2'), null);
+          assert.equal(formData.get('geslacht'), "man");
+        });
       });
     });
   </script>
