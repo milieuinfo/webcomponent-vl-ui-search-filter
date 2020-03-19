@@ -37,12 +37,16 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
 
   connectedCallback() {
     this.classList.add('vl-search-filter');
-    this.querySelectorAll('form').forEach(form => form.classList.add(this._elementPrefix + 'form'));
-    this.querySelectorAll('form > section').forEach(section => section.classList.add(this._elementPrefix + 'section'));
-    this.querySelectorAll('form > section > h2').forEach(title => title.classList.add(this._elementPrefix + 'section-title'));
-    this.querySelectorAll('form > section > div').forEach(field => field.classList.add(this._elementPrefix + 'field'));
-    this.querySelectorAll('form > section > div > label').forEach(label => label.classList.add(this._elementPrefix + 'field__label'));
-    this.querySelectorAll('form ~ div').forEach(footer => footer.classList.add(this._elementPrefix + 'footer'));
+    const form = this._form || this._slotForm;
+    if (form) {
+      const parent = form.parentElement;
+      parent.querySelector('form').classList.add(this._elementPrefix + 'form');
+      parent.querySelectorAll('form > section').forEach(section => section.classList.add(this._elementPrefix + 'section'));
+      parent.querySelectorAll('form > section > h2').forEach(title => title.classList.add(this._elementPrefix + 'section-title'));
+      parent.querySelectorAll('form > section > div').forEach(field => field.classList.add(this._elementPrefix + 'field'));
+      parent.querySelectorAll('form > section > div > label').forEach(label => label.classList.add(this._elementPrefix + 'field__label'));
+      parent.querySelectorAll('form ~ div').forEach(footer => footer.classList.add(this._elementPrefix + 'footer'));
+    }
   }
 
   get _classPrefix() {
@@ -57,8 +61,29 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
     return 'vl-search-filter';
   }
 
+  get _form() {
+    return this.querySelector('form');
+  }
+
+  get _slotForm() {
+    const slot = this.querySelector('slot');
+    if (slot) {
+      return slot.assignedElements().find((element) => element.tagName == 'FORM');
+    }
+  }
+
+  get _hasForm() {
+    return !!this.querySelector('form');
+  }
+
   get formData() {
-    return new FormData(this.querySelector('form'));
+    if (this._hasForm) {
+      return new FormData(this._form);
+    } else {
+      const form = document.createElement('form');
+      form.append(... this._slotForm.children);
+      return new FormData(form);
+    }
   }
 }
 
