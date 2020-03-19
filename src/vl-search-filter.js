@@ -68,7 +68,7 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
   get _slotForm() {
     const slot = this.querySelector('slot');
     if (slot) {
-      return slot.assignedElements().find((element) => element.tagName == 'FORM');
+      return slot.assignedElements().map(element => element.parentElement.querySelector('form')).find(Boolean);
     }
   }
 
@@ -77,13 +77,7 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
   }
 
   get formData() {
-    if (this._hasForm) {
-      return new FormData(this._form);
-    } else {
-      const form = document.createElement('form');
-      form.append(... this._slotForm.children);
-      return new FormData(form);
-    }
+    return new FormData(this._form || this._slotForm);
   }
 }
 
