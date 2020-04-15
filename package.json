@@ -55,6 +55,6 @@
     "vl-ui-button": "^4.0.0",
     "vl-ui-input-field": "^3.0.0",
     "vl-ui-select": "^4.0.0",
-    "vl-ui-util": "5.1.5"
+    "vl-ui-util": "^5.1.6"
   }
 }
