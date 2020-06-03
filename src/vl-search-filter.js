@@ -1,21 +1,20 @@
-import { NativeVlElement, define } from '/node_modules/vl-ui-core/dist/vl-core.js';
+import {nativeVlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
 
 /**
  * VlSearchFilter
  * @class
- * @classdesc
  *
- * @extends VlElement
+ * @extends HTMLDivElement
+ * @mixin nativeVlElement
  *
- * @property data-vl-title - De titel van deze search filter.
- * @property alt - Alternatieve (transparante) achtergrond.
+ * @property {string} data-vl-title - De titel van deze search filter.
+ * @property {string} alt - Alternatieve (transparante) achtergrond.
  *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/issues|Issues}
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-search-filter.html|Demo}
- *
  */
-export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
+export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   static get _observedAttributes() {
     return ['data-vl-title'];
   }
@@ -24,7 +23,7 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
     return ['alt'];
   }
 
-  _data_vl_titleChangedCallback(oldValue, newValue) {
+  _titleChangedCallback(oldValue, newValue) {
     let titleElement = this.querySelector('p.' + this._elementPrefix + 'intro');
     if (titleElement == null) {
       titleElement = document.createElement('p');
@@ -37,12 +36,12 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
 
   connectedCallback() {
     this.classList.add('vl-search-filter');
-    this.querySelectorAll('form').forEach(form => form.classList.add(this._elementPrefix + 'form'));
-    this.querySelectorAll('form > section').forEach(section => section.classList.add(this._elementPrefix + 'section'));
-    this.querySelectorAll('form > section > h2').forEach(title => title.classList.add(this._elementPrefix + 'section-title'));
-    this.querySelectorAll('form > section > div').forEach(field => field.classList.add(this._elementPrefix + 'field'));
-    this.querySelectorAll('form > section > div > label').forEach(label => label.classList.add(this._elementPrefix + 'field__label'));
-    this.querySelectorAll('form ~ div').forEach(footer => footer.classList.add(this._elementPrefix + 'footer'));
+    this.querySelectorAll('form').forEach((form) => form.classList.add(this._elementPrefix + 'form'));
+    this.querySelectorAll('form > section').forEach((section) => section.classList.add(this._elementPrefix + 'section'));
+    this.querySelectorAll('form > section > h2').forEach((title) => title.classList.add(this._elementPrefix + 'section-title'));
+    this.querySelectorAll('form > section > div').forEach((field) => field.classList.add(this._elementPrefix + 'field'));
+    this.querySelectorAll('form > section > div > label').forEach((label) => label.classList.add(this._elementPrefix + 'field__label'));
+    this.querySelectorAll('form ~ div').forEach((footer) => footer.classList.add(this._elementPrefix + 'footer'));
   }
 
   get _classPrefix() {
@@ -62,4 +61,4 @@ export class VlSearchFilter extends NativeVlElement(HTMLDivElement) {
   }
 }
 
-define('vl-search-filter', VlSearchFilter, { extends: 'div' });
+define('vl-search-filter', VlSearchFilter, {extends: 'div'});
