@@ -5,7 +5,6 @@ import {nativeVlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js'
  * @class
  *
  * @extends HTMLDivElement
- * @mixin nativeVlElement
  *
  * @property {string} data-vl-title - De titel van deze search filter.
  * @property {string} alt - Alternatieve (transparante) achtergrond.
