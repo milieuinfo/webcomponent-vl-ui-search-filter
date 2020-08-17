@@ -3,11 +3,13 @@ import {nativeVlElement, define} from 'vl-ui-core';
 /**
  * VlSearchFilter
  * @class
+ * @classdesc De search filter laat de gebruiker toe om de zoekresulten te verfijnen.
  *
  * @extends HTMLDivElement
+ * @mixes nativeVlElement
  *
  * @property {string} data-vl-title - De titel van deze search filter.
- * @property {string} alt - Alternatieve (transparante) achtergrond.
+ * @property {string} data-vl-alt - Alternatieve (transparante) achtergrond.
  *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/issues|Issues}
@@ -15,7 +17,7 @@ import {nativeVlElement, define} from 'vl-ui-core';
  */
 export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   static get _observedAttributes() {
-    return ['data-vl-title'];
+    return ['title'];
   }
 
   static get _observedClassAttributes() {

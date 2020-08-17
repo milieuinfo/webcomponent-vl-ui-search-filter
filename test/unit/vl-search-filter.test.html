@@ -70,9 +70,9 @@
       test('krijgt de juiste class wanneer het element alt bevat', () => {
         const searchFilter = fixture('vl-search-filter-fixture');
         assert.isFalse(searchFilter.classList.contains('vl-search-filter--alt'));
-        searchFilter.setAttribute('alt', '');
+        searchFilter.setAttribute('data-vl-alt', '');
         assert.isTrue(searchFilter.classList.contains('vl-search-filter--alt'));
-        searchFilter.removeAttribute('alt');
+        searchFilter.removeAttribute('data-vl-alt');
         assert.isFalse(searchFilter.classList.contains('vl-search-filter--alt'));
       });
 

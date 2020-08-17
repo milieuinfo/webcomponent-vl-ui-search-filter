@@ -1,5 +1,6 @@
 const {VlElement} = require('vl-ui-core').Test;
-const {By} = require('selenium-webdriver');
+const {By} = require('vl-ui-core').Test.Setup;
+
 class VlSearchFilter extends VlElement {
   async getTitleText() {
     const title = await this.findElement(By.css('p.vl-search-filter__intro'));
