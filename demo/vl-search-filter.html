@@ -4,21 +4,23 @@
 <head>
     <title>vl-search-filter voorbeeld</title>
     <script type="module" src="/node_modules/vl-ui-demo/dist/vl-demo-all.js"></script>
-
-    <script type="module" src="/src/vl-search-filter.js"></script>
+    <script type="module" src="/node_modules/vl-ui-body/dist/vl-body.js"></script>
     <script type="module" src="/node_modules/vl-ui-input-field/dist/vl-input-field.js"></script>
     <script type="module" src="/node_modules/vl-ui-select/dist/vl-select.js"></script>
     <script type="module" src="/node_modules/vl-ui-button/dist/vl-button.js"></script>
     <script type="module" src="/node_modules/vl-ui-link/dist/vl-link.js"></script>
 
+    <script type="module" src="/src/vl-search-filter.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/src/style.css" />
+    <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-body/dist/style.css" />
     <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-input-field/dist/style.css" />
     <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-select/dist/style.css" />
     <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-button/dist/style.css" />
     <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-link/dist/style.css" />
-    <link rel="stylesheet" type="text/css" href="/src/style.css" />
 </head>
 
-<body>
+<body is="vl-body">
     <vl-demo-page data-vl-webcomponent="vl-search-filter">
         <vl-demo data-vl-title="Search filter">
             <div id="search-filter" is="vl-search-filter" data-vl-title="Verfijn uw zoekopdracht">
