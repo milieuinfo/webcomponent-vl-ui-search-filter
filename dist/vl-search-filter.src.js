@@ -30,7 +30,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
       titleElement = document.createElement('p');
       titleElement.setAttribute('class', this._elementPrefix + 'intro');
       titleElement.textContent = newValue;
-      this.insertBefore(titleElement, this.firstChild);
+      setTimeout(() => this.insertBefore(titleElement, this.firstChild));
     }
     titleElement.textContent = newValue;
   }

@@ -86,17 +86,25 @@
         assert.include(Array.from(searchFilter.querySelector('form ~ div').classList), 'vl-search-filter__footer');
       });
 
-      test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
+      test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden met vertraging om achterliggende framework issues te voorkomen', (done) => {
         const searchFilter = fixture('vl-search-filter-fixture');
         searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
-        assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
+        setTimeout(() => {
+          assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
+          done();
+        });
       });
 
-      test('als de title gewijzigd wordt, zal de textcontent hiervan ook veranderen', () => {
+      test('als de title gewijzigd wordt, zal de textcontent hiervan ook veranderen met vertraging om achterliggende framework issues te voorkomen', (done) => {
         const searchFilter = fixture('vl-search-filter-fixture-title');
-        assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
-        searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
-        assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
+        setTimeout(() => {
+          assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
+          searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
+          setTimeout(() => {
+            assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
+            done();
+          });
+        });
       });
 
       test('kan alle waarden van de inputvelden van de search-filter opvragen', () => {
