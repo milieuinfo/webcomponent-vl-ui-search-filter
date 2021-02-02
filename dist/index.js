@@ -1,3 +1,1 @@
-module.exports = {
-  VlSearchFilter: require('../dist/vl-search-filter.src.js').VlSearchFilter,
-};
+export * from '../dist/vl-search-filter.src.js';
