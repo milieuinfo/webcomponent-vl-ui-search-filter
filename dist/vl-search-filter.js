@@ -11,6 +11,7 @@ import '/node_modules/vl-ui-titles/dist/vl-titles.js';
  *
  * @property {string} data-vl-title - De titel van deze search filter.
  * @property {string} data-vl-alt - Alternatieve (transparante) achtergrond.
+ * @property {string} data-vl-mobile-modal - Activeert geoptimaliseerde weergave voor op mobiele toestellen.
  *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/issues|Issues}
