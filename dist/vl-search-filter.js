@@ -33,7 +33,10 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     this.querySelectorAll('form > section > div').forEach((field) => field.classList.add(`${this._elementPrefix}field`));
     this.querySelectorAll('form > section > div > label').forEach((label) => label.classList.add(`${this._elementPrefix}field__label`));
     this.querySelectorAll('form > div').forEach((div) => div.classList.add(`${this._elementPrefix}field`));
-    this._footerElements.forEach((footer) => footer.classList.add(`${this._elementPrefix}footer`));
+
+    if (this._footerElement) {
+      this._footerElement.classList.add(`${this._elementPrefix}footer`);
+    }
   }
 
   get formData() {
@@ -53,7 +56,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   }
 
   get _titleElement() {
-    return this._introElement || this._headerElement;
+    return this._introElement || this._headerTitleElement;
   }
 
   get _introElement() {
@@ -64,8 +67,16 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     return this.querySelector(`.${this._elementPrefix}header-modal`);
   }
 
-  get _footerElements() {
-    return [...this.querySelectorAll('form ~ div')];
+  get _headerTitleElement() {
+    return this._headerElement ? this._headerElement.querySelector('h2') : undefined;
+  }
+
+  get _formElement() {
+    return this.querySelector('form');
+  }
+
+  get _footerElement() {
+    return this.querySelector(`form ~ div:not(.${this._elementPrefix}footer-modal):last-child`);
   }
 
   get _submitButton() {
@@ -85,16 +96,10 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   }
 
   _mobileModalChangedCallback(oldValue, newValue) {
-    if (this._titleElement) {
-      this._titleElement.remove();
-    }
-
     if (newValue != undefined) {
-      this.insertBefore(this.__createHeaderElement(), this.firstChild);
-      this.__moveFooterElementsToHeader();
-      this.__convertSubmitButtonContainerToFooter();
+      this.__enableModal();
     } else {
-      this._titleChangedCallback(undefined, this._title);
+      this.__disableModal();
     }
   }
 
@@ -105,29 +110,75 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     return title;
   }
 
-  __createHeaderElement() {
-    const header = document.createElement('div');
-    header.classList.add(`${this._elementPrefix}header-modal`);
-    const title = document.createElement('h2', 'vl-h2');
-    title.textContent = this._title;
-    header.appendChild(title);
-    return header;
+  __enableModal() {
+    this.__convertFooterToHeader();
+    this.__convertIntroToHeaderTitle();
+    this.__convertSubmitButtonContainerToModalFooter();
   }
 
-  __moveFooterElementsToHeader() {
-    this._footerElements.flatMap((element) => [...element.children]).forEach((element) => {
-      this._titleElement.appendChild(element);
-      element.classList.add(`${this._elementPrefix}header__clear`);
-    });
+  __disableModal() {
+    this.__convertHeaderTitleToIntro();
+    this.__convertHeaderToFooter();
+    this.__convertModalFooterToSubmitButtonContainer();
   }
 
-  __convertSubmitButtonContainerToFooter() {
-    if (this._submitButton) {
-      this._submitButton.setAttribute('data-vl-block', '');
-      const container = this._submitButton.parentElement;
-      container.classList.add(`${this._elementPrefix}footer-modal`);
-      this._element.appendChild(container);
+  __convertFooterToHeader() {
+    const header = this._footerElement;
+    if (header) {
+      this.__prepareMobileModal(header);
+      this.insertBefore(header, this.firstChild);
     }
+  }
+
+  __convertIntroToHeaderTitle() {
+    if (this._title) {
+      const title = document.createElement('h2', 'vl-h2');
+      title.textContent = this._title;
+      this._headerElement.insertBefore(title, this._headerElement.firstChild);
+      this._introElement.remove();
+    }
+  }
+
+  __convertSubmitButtonContainerToModalFooter() {
+    if (this._submitButton) {
+      this.__prepareSubmitButton();
+      this._element.appendChild(this._submitButton.parentElement);
+    }
+  }
+
+  __convertHeaderTitleToIntro() {
+    if (this._title) {
+      this.insertBefore(this.__createTitleElement(), this.firstChild);
+      this._headerTitleElement.remove();
+    }
+  }
+
+  __convertHeaderToFooter() {
+    const footer = this._headerElement;
+    if (footer) {
+      this.__prepareMobileModal(footer);
+      this._element.appendChild(footer);
+    }
+  }
+
+  __convertModalFooterToSubmitButtonContainer() {
+    if (this._submitButton) {
+      this.__prepareSubmitButton();
+      this._formElement.appendChild(this._submitButton.parentElement);
+    }
+  }
+
+  __prepareMobileModal(element) {
+    element.classList.toggle(`${this._elementPrefix}footer`);
+    element.classList.toggle(`${this._elementPrefix}header-modal`);
+    [...element.children].forEach((child) => child.classList.toggle(`${this._elementPrefix}header__clear`));
+  }
+
+  __prepareSubmitButton() {
+    this._submitButton.toggleAttribute('data-vl-block');
+    const container = this._submitButton.parentElement;
+    container.classList.toggle(`${this._elementPrefix}footer-modal`);
+    container.classList.toggle(`${this._elementPrefix}field`);
   }
 }
 

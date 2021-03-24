@@ -16,15 +16,15 @@
     </template>
   </test-fixture>
 
-  <test-fixture id="vl-search-filter-fixture-title">
+  <test-fixture id="vl-search-filter-title-fixture">
     <template>
       <div is="vl-search-filter" data-vl-title="Zoeken..."></div>
     </template>
   </test-fixture>
 
-  <test-fixture id="vl-search-filter-fixture-form">
+  <test-fixture id="vl-search-filter-form-fixture">
     <template>
-      <div is="vl-search-filter">
+      <div is="vl-search-filter" data-vl-title="Filter">
         <form>
           <section>
             <h2>Test</h2>
@@ -32,15 +32,20 @@
               <label is="form-label">Naam</label>
             </div>
           </section>
+          <div>
+            <button is="vl-button" type="submit">
+              Zoeken
+            </button>
+          </div>
         </form>
         <div>
-          <a href="#" is="vl-link">Zoekopdracht verwijderen</a>
+          <a id="reset" href="#" is="vl-link">Zoekopdracht verwijderen</a>
         </div>
       </div>
     </template>
   </test-fixture>
 
-  <test-fixture id="vl-search-filter-name-valuefixture">
+  <test-fixture id="vl-search-filter-name-value-fixture">
     <template>
       <div is="vl-search-filter">
         <form>
@@ -67,48 +72,43 @@
         assert.isTrue(element.classList.contains('vl-search-filter'));
       });
 
-      test('krijgt de juiste class wanneer het element alt bevat', () => {
-        const searchFilter = fixture('vl-search-filter-fixture');
-        assert.isFalse(searchFilter.classList.contains('vl-search-filter--alt'));
-        searchFilter.setAttribute('data-vl-alt', '');
-        assert.isTrue(searchFilter.classList.contains('vl-search-filter--alt'));
-        searchFilter.removeAttribute('data-vl-alt');
-        assert.isFalse(searchFilter.classList.contains('vl-search-filter--alt'));
+      test('de attributen zetten de juiste classes', () => {
+        ['alt', 'mobile-modal'].forEach((attribute) => {
+          const searchFilter = fixture('vl-search-filter-fixture');
+          assert.isFalse(searchFilter.classList.contains(`vl-search-filter--${attribute}`));
+          searchFilter.setAttribute(`data-vl-${attribute}`, '');
+          assert.isTrue(searchFilter.classList.contains(`vl-search-filter--${attribute}`));
+          searchFilter.removeAttribute(`data-vl-${attribute}`);
+          assert.isFalse(searchFilter.classList.contains(`vl-search-filter--${attribute}`));
+        });
       });
 
       test('krijgt de juiste classes bij een form section title field en label', () => {
-        const searchFilter = fixture('vl-search-filter-fixture-form');
+        const searchFilter = fixture('vl-search-filter-form-fixture');
         assert.include(Array.from(searchFilter.querySelector('form').classList), 'vl-search-filter__form');
-        assert.include(Array.from(searchFilter.querySelector('section').classList), 'vl-search-filter__section');
-        assert.include(Array.from(searchFilter.querySelector('section > h2').classList), 'vl-search-filter__section-title');
-        assert.include(Array.from(searchFilter.querySelector('section > div').classList), 'vl-search-filter__field');
-        assert.include(Array.from(searchFilter.querySelector('section > div > label').classList), 'vl-search-filter__field__label');
+        assert.include(Array.from(searchFilter.querySelector('form > section').classList), 'vl-search-filter__section');
+        assert.include(Array.from(searchFilter.querySelector('form > section > h2').classList), 'vl-search-filter__section-title');
+        assert.include(Array.from(searchFilter.querySelector('form > section > div').classList), 'vl-search-filter__field');
+        assert.include(Array.from(searchFilter.querySelector('form > section > div > label').classList), 'vl-search-filter__field__label');
+        assert.include(Array.from(searchFilter.querySelector('form > div').classList), 'vl-search-filter__field');
         assert.include(Array.from(searchFilter.querySelector('form ~ div').classList), 'vl-search-filter__footer');
       });
 
-      test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden met vertraging om achterliggende framework issues te voorkomen', (done) => {
+      test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
         const searchFilter = fixture('vl-search-filter-fixture');
         searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
-        setTimeout(() => {
-          assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
-          done();
-        });
+        assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
       });
 
-      test('als de title gewijzigd wordt, zal de textcontent hiervan ook veranderen met vertraging om achterliggende framework issues te voorkomen', (done) => {
-        const searchFilter = fixture('vl-search-filter-fixture-title');
-        setTimeout(() => {
-          assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
-          searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
-          setTimeout(() => {
-            assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
-            done();
-          });
-        });
+      test('als de title gewijzigd wordt, zal de textcontent hiervan ook veranderen', () => {
+        const searchFilter = fixture('vl-search-filter-title-fixture');
+        assert.equal(searchFilter.querySelector('p').textContent, 'Zoeken...');
+        searchFilter.setAttribute('data-vl-title', 'Nieuwe zoekopdracht');
+        assert.equal(searchFilter.querySelector('p').textContent, 'Nieuwe zoekopdracht');
       });
 
       test('kan alle waarden van de inputvelden van de search-filter opvragen', () => {
-        const searchFilter = fixture('vl-search-filter-name-valuefixture');
+        const searchFilter = fixture('vl-search-filter-name-value-fixture');
         const formData = searchFilter.formData;
 
         assert.equal(formData.get('naam'), '');
@@ -116,6 +116,58 @@
         assert.equal(formData.get('kleur1'), 'rood');
         assert.equal(formData.get('kleur2'), null);
         assert.equal(formData.get('geslacht'), 'man');
+      });
+
+      test('wanneer het mobile-modal attribuut gezet wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', () => {
+        const searchFilter = fixture('vl-search-filter-form-fixture');
+        searchFilter.setAttribute('data-vl-mobile-modal', '');
+
+        assert.isNull(searchFilter._introElement);
+    
+        const header = searchFilter.children[0];
+        assert.include([...header.classList], 'vl-search-filter__header-modal');
+        assert.equal(header.nodeName, 'DIV');
+
+        const title = header.children[0];
+        assert.equal(title.nodeName, 'H2');
+        assert.equal(title.textContent, searchFilter.getAttribute('data-vl-title'));
+
+        const reset = header.children[1];
+        assert.equal(reset.id, 'reset');
+        assert.include([...reset.classList], 'vl-search-filter__header__clear');
+        assert.isNull(searchFilter._footerElement);
+
+        assert.isTrue(searchFilter._submitButton.hasAttribute('data-vl-block'));
+        const container = searchFilter._submitButton.parentElement;
+        assert.include([...container.classList], 'vl-search-filter__footer-modal');
+        assert.notInclude([...container.classList], 'vl-search-filter__field');
+        assert.equal(searchFilter.children[searchFilter.children.length -1], container);
+      });
+
+      test('wanneer het mobile-modal attribuut verwijderd wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', () => {
+        const searchFilter = fixture('vl-search-filter-form-fixture');
+        searchFilter.setAttribute('data-vl-mobile-modal', '');
+        searchFilter.removeAttribute('data-vl-mobile-modal');
+
+        const intro = searchFilter.children[0];
+        assert.equal(intro, searchFilter._introElement);
+        assert.equal(intro.textContent, searchFilter.getAttribute('data-vl-title'));
+
+        assert.isNull(searchFilter._headerElement);
+
+        debugger;
+        const footer = searchFilter.children[searchFilter.children.length - 1];
+        const reset = footer.children[0];
+        assert.equal(reset.id, 'reset');
+        assert.notInclude([...reset.classList], 'vl-search-filter__header__clear');
+        assert.include([...footer.classList], 'vl-search-filter__footer');
+
+        assert.isFalse(searchFilter._submitButton.hasAttribute('data-vl-block'));
+        const container = searchFilter._submitButton.parentElement;
+        assert.notInclude([...container.classList], 'vl-search-filter__footer-modal');
+        assert.include([...container.classList], 'vl-search-filter__field');
+        assert.notEqual(searchFilter.children[searchFilter.children.length -1], container);
+        assert.equal(container.parentElement, searchFilter._formElement);
       });
     });
   </script>
