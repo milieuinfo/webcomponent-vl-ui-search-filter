@@ -9,9 +9,10 @@ import '/node_modules/vl-ui-titles/dist/vl-titles.js';
  * @extends HTMLDivElement
  * @mixes nativeVlElement
  *
- * @property {string} data-vl-title - De titel van deze search filter.
  * @property {string} data-vl-alt - Alternatieve (transparante) achtergrond.
  * @property {string} data-vl-mobile-modal - Activeert geoptimaliseerde weergave voor op mobiele toestellen.
+ * @property {string} [data-vl-mobile-modal-title=Filter] - De titel van deze search filter op mobiele toestellen indien niet gedeclareerd wordt het data-vl-title attribuut of de default genomen.
+ * @property {string} data-vl-title - De titel van deze search filter.
  *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/issues|Issues}
@@ -57,7 +58,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   }
 
   get _titleElement() {
-    return this._introElement || this._headerTitleElement;
+    return this._introElement || this._mobileModalTitleElement;
   }
 
   get _introElement() {
@@ -68,7 +69,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     return this.querySelector(`.${this._elementPrefix}header-modal`);
   }
 
-  get _headerTitleElement() {
+  get _mobileModalTitleElement() {
     return this._headerElement ? this._headerElement.querySelector('h2') : undefined;
   }
 
@@ -80,12 +81,27 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     return this.querySelector(`form ~ div:not(.${this._elementPrefix}footer-modal):last-child`);
   }
 
+  get _footerModalElement() {
+    return this.querySelector(`.${this._elementPrefix}footer-modal`);
+  }
+
   get _submitButton() {
-    return this.querySelector('form button');
+    let button;
+    if (this._formElement) {
+      button = this._formElement.querySelector('button');
+    }
+    if (!button && this._footerModalElement) {
+      button = this._footerModalElement.querySelector('button');
+    }
+    return button;
   }
 
   get _title() {
     return this.getAttribute('data-vl-title');
+  }
+
+  get _mobileModalTitle() {
+    return this.getAttribute('data-vl-mobile-modal-title') || this._title || 'Filter';
   }
 
   _titleChangedCallback(oldValue, newValue) {
@@ -93,6 +109,12 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
       this.insertBefore(this.__createTitleElement(), this.firstChild);
     } else {
       this._titleElement.textContent = newValue;
+    }
+  }
+
+  _mobileModalTitleChangedCallback(oldValue, newValue) {
+    if (this._mobileModalTitleElement) {
+      this._mobileModalTitleElement.textContent = newValue;
     }
   }
 
@@ -124,18 +146,16 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   }
 
   __convertFooterToHeader() {
-    const header = this._footerElement;
-    if (header) {
-      this.__prepareMobileModal(header);
-      this.insertBefore(header, this.firstChild);
-    }
+    const header = this._footerElement || document.createElement('div');
+    this.__prepareMobileModal(header);
+    this.insertBefore(header, this.firstChild);
   }
 
   __convertIntroToHeaderTitle() {
-    if (this._title) {
-      const title = document.createElement('h2', 'vl-h2');
-      title.textContent = this._title;
-      this._headerElement.insertBefore(title, this._headerElement.firstChild);
+    const title = document.createElement('h2', 'vl-h2');
+    title.textContent = this._mobileModalTitle;
+    this._headerElement.insertBefore(title, this._headerElement.firstChild);
+    if (this._introElement) {
       this._introElement.remove();
     }
   }
@@ -143,6 +163,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   __convertSubmitButtonContainerToModalFooter() {
     if (this._submitButton) {
       this.__prepareSubmitButton();
+      this._submitButton.addEventListener('click', () => this.removeAttribute('data-vl-mobile-modal'), {once: true});
       this._element.appendChild(this._submitButton.parentElement);
     }
   }
@@ -150,7 +171,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   __convertHeaderTitleToIntro() {
     if (this._title) {
       this.insertBefore(this.__createTitleElement(), this.firstChild);
-      this._headerTitleElement.remove();
+      this._mobileModalTitleElement.remove();
     }
   }
 
@@ -164,8 +185,8 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
 
   __convertModalFooterToSubmitButtonContainer() {
     if (this._submitButton) {
-      this.__prepareSubmitButton();
       this._formElement.appendChild(this._submitButton.parentElement);
+      this.__prepareSubmitButton();
     }
   }
 

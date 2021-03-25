@@ -65,6 +65,12 @@
     </template>
   </test-fixture>
 
+  <test-fixture id="vl-search-filter-mobile-modal-title-fixture">
+    <template>
+      <div is="vl-search-filter" data-vl-title="Titel" data-vl-mobile-modal-title="Mobiele Titel"></div>
+    </template>
+  </test-fixture>
+
   <script>
     suite('vl-search-filter', () => {
       test('heeft de vl-search-filter class', () => {
@@ -126,6 +132,7 @@
     
         const header = searchFilter.children[0];
         assert.include([...header.classList], 'vl-search-filter__header-modal');
+        assert.notInclude([...header.classList], 'vl-search-filter__footer');
         assert.equal(header.nodeName, 'DIV');
 
         const title = header.children[0];
@@ -144,7 +151,7 @@
         assert.equal(searchFilter.children[searchFilter.children.length -1], container);
       });
 
-      test('wanneer het mobile-modal attribuut verwijderd wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', () => {
+      test('wanneer het data-vl-mobile-modal attribuut verwijderd wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', () => {
         const searchFilter = fixture('vl-search-filter-form-fixture');
         searchFilter.setAttribute('data-vl-mobile-modal', '');
         searchFilter.removeAttribute('data-vl-mobile-modal');
@@ -155,11 +162,11 @@
 
         assert.isNull(searchFilter._headerElement);
 
-        debugger;
         const footer = searchFilter.children[searchFilter.children.length - 1];
         const reset = footer.children[0];
         assert.equal(reset.id, 'reset');
         assert.notInclude([...reset.classList], 'vl-search-filter__header__clear');
+        assert.notInclude([...footer.classList], 'vl-search-filter__header-modal');
         assert.include([...footer.classList], 'vl-search-filter__footer');
 
         assert.isFalse(searchFilter._submitButton.hasAttribute('data-vl-block'));
@@ -168,6 +175,30 @@
         assert.include([...container.classList], 'vl-search-filter__field');
         assert.notEqual(searchFilter.children[searchFilter.children.length -1], container);
         assert.equal(container.parentElement, searchFilter._formElement);
+      });
+
+      test('standaard wordt de titel voor op mobiele toestellen getoond, maar indien niet gedeclareerd wordt de titel of defualt waarde genomen', () => {
+        let searchFilter = fixture('vl-search-filter-mobile-modal-title-fixture');
+        searchFilter.setAttribute('data-vl-mobile-modal', '');
+        assert.equal(searchFilter._mobileModalTitleElement.textContent, searchFilter.getAttribute('data-vl-mobile-modal-title'));
+
+        searchFilter = fixture('vl-search-filter-title-fixture');
+        searchFilter.setAttribute('data-vl-mobile-modal', '');
+        assert.equal(searchFilter._mobileModalTitleElement.textContent, searchFilter.getAttribute('data-vl-title'));
+
+        searchFilter = fixture('vl-search-filter-fixture');
+        searchFilter.setAttribute('data-vl-mobile-modal', '');
+        assert.equal(searchFilter._mobileModalTitleElement.textContent, 'Filter');
+      });
+
+      test('bij het klikken op de submit knop op een mobiel toestel, zal het mobile-modal attribuut uitgeschakeld worden zodat de filter verdwijnt', (done) => {
+        const searchFilter = fixture('vl-search-filter-form-fixture');
+        searchFilter.setAttribute('data-vl-mobile-modal', '');
+        searchFilter._submitButton.addEventListener('click', () => {
+          assert.isFalse(searchFilter.hasAttribute('data-vl-mobile-modal'));
+          done();
+        });
+        searchFilter._submitButton.click();
       });
     });
   </script>
