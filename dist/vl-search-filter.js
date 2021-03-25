@@ -162,11 +162,12 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
 
   __convertSubmitButtonContainerToModalFooter() {
     if (this._submitButton) {
+      this.hidden = false;
       this.__prepareSubmitButton();
       this._submitButton.addEventListener('click', () => {
-        this.removeAttribute('data-vl-mobile-modal'), {once: true};
+        this.removeAttribute('data-vl-mobile-modal');
         this.hidden = true;
-      });
+      }, {once: true});
       this._element.appendChild(this._submitButton.parentElement);
     }
   }

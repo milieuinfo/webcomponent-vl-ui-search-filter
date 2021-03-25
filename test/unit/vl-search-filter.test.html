@@ -197,6 +197,9 @@
         searchFilter._submitButton.addEventListener('click', () => {
           assert.isTrue(searchFilter.hidden);
           assert.isFalse(searchFilter.hasAttribute('data-vl-mobile-modal'));
+
+          searchFilter.setAttribute('data-vl-mobile-modal', '');
+          assert.isFalse(searchFilter.hidden);
           done();
         });
         searchFilter._submitButton.click();
