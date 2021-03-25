@@ -191,11 +191,11 @@
         assert.equal(searchFilter._mobileModalTitleElement.textContent, 'Filter');
       });
 
-      test('bij het klikken op de submit knop op een mobiel toestel, zal het mobile-modal attribuut uitgeschakeld worden zodat de filter verdwijnt', (done) => {
+      test('bij het klikken op de submit knop op een mobiel toestel, zal de filter verdwijnen', (done) => {
         const searchFilter = fixture('vl-search-filter-form-fixture');
         searchFilter.setAttribute('data-vl-mobile-modal', '');
         searchFilter._submitButton.addEventListener('click', () => {
-          assert.isFalse(searchFilter.hasAttribute('data-vl-mobile-modal'));
+          assert.isTrue(searchFilter.hidden);
           done();
         });
         searchFilter._submitButton.click();
