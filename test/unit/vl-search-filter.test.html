@@ -196,6 +196,7 @@
         searchFilter.setAttribute('data-vl-mobile-modal', '');
         searchFilter._submitButton.addEventListener('click', () => {
           assert.isTrue(searchFilter.hidden);
+          assert.isFalse(searchFilter.hasAttribute('data-vl-mobile-modal'));
           done();
         });
         searchFilter._submitButton.click();
