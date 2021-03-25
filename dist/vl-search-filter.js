@@ -81,7 +81,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   }
 
   get _submitButton() {
-    return this.querySelector('button[type="submit"]');
+    return this.querySelector('form button');
   }
 
   get _title() {
