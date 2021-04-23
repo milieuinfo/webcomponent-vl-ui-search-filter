@@ -30,8 +30,13 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   connectedCallback() {
     this.classList.add('vl-search-filter');
     this.__processForm();
-    this.observer = new MutationObserver(() => this.__processForm());
-    this.observer.observe(this, {childList: true});
+    this.observer = this.__observer();
+  }
+
+  __observer() {
+    const observer = new MutationObserver(() => this.__processForm());
+    observer.observe(this, {childList: true});
+    return observer;
   }
 
   disconnectedCallback() {
