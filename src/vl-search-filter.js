@@ -27,8 +27,26 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     return ['alt', 'mobile-modal'];
   }
 
+  constructor() {
+    super();
+    this.observer = this.__observeChildElements(() => this.__processClasses());
+  }
+
   connectedCallback() {
     this.classList.add('vl-search-filter');
+  }
+
+  __observeChildElements(callback) {
+    const observer = new MutationObserver(callback);
+    observer.observe(this, {childList: true});
+    return observer;
+  }
+
+  disconnectedCallback() {
+    this.observer.disconnect();
+  }
+
+  __processClasses() {
     this.querySelectorAll('form').forEach((form) => form.classList.add(`${this._elementPrefix}form`));
     this.querySelectorAll('form > section').forEach((section) => section.classList.add(`${this._elementPrefix}section`));
     this.querySelectorAll('form > section > h2').forEach((title) => title.classList.add(`${this._elementPrefix}section-title`));

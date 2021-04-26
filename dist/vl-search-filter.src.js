@@ -29,12 +29,33 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
 
   connectedCallback() {
     this.classList.add('vl-search-filter');
-    this.querySelectorAll('form').forEach((form) => form.classList.add(`${this._elementPrefix}form`));
-    this.querySelectorAll('form > section').forEach((section) => section.classList.add(`${this._elementPrefix}section`));
-    this.querySelectorAll('form > section > h2').forEach((title) => title.classList.add(`${this._elementPrefix}section-title`));
-    this.querySelectorAll('form > section > div').forEach((field) => field.classList.add(`${this._elementPrefix}field`));
-    this.querySelectorAll('form > section > div > label').forEach((label) => label.classList.add(`${this._elementPrefix}field__label`));
-    this.querySelectorAll('form > div').forEach((div) => div.classList.add(`${this._elementPrefix}field`));
+    this.__processForm();
+    this.observer = this.__observer();
+  }
+
+  __observer() {
+    const observer = new MutationObserver(() => this.__processForm());
+    observer.observe(this, {childList: true});
+    return observer;
+  }
+
+  disconnectedCallback() {
+    this.observer.disconnect();
+  }
+
+  __processForm() {
+    this.querySelectorAll('form').forEach(
+        (form) => form.classList.add(`${this._elementPrefix}form`));
+    this.querySelectorAll('form > section').forEach(
+        (section) => section.classList.add(`${this._elementPrefix}section`));
+    this.querySelectorAll('form > section > h2').forEach(
+        (title) => title.classList.add(`${this._elementPrefix}section-title`));
+    this.querySelectorAll('form > section > div').forEach(
+        (field) => field.classList.add(`${this._elementPrefix}field`));
+    this.querySelectorAll('form > section > div > label').forEach(
+        (label) => label.classList.add(`${this._elementPrefix}field__label`));
+    this.querySelectorAll('form > div').forEach(
+        (div) => div.classList.add(`${this._elementPrefix}field`));
 
     if (this._footerElement) {
       this._footerElement.classList.add(`${this._elementPrefix}footer`);

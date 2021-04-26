@@ -89,15 +89,18 @@
         });
       });
 
-      test('krijgt de juiste classes bij een form section title field en label', () => {
+      test('krijgt de juiste classes bij een form section title field en label', (done) => {
         const searchFilter = fixture('vl-search-filter-form-fixture');
-        assert.include(Array.from(searchFilter.querySelector('form').classList), 'vl-search-filter__form');
-        assert.include(Array.from(searchFilter.querySelector('form > section').classList), 'vl-search-filter__section');
-        assert.include(Array.from(searchFilter.querySelector('form > section > h2').classList), 'vl-search-filter__section-title');
-        assert.include(Array.from(searchFilter.querySelector('form > section > div').classList), 'vl-search-filter__field');
-        assert.include(Array.from(searchFilter.querySelector('form > section > div > label').classList), 'vl-search-filter__field__label');
-        assert.include(Array.from(searchFilter.querySelector('form > div').classList), 'vl-search-filter__field');
-        assert.include(Array.from(searchFilter.querySelector('form ~ div').classList), 'vl-search-filter__footer');
+        setTimeout(() => {
+          assert.include(Array.from(searchFilter.querySelector('form').classList), 'vl-search-filter__form');
+          assert.include(Array.from(searchFilter.querySelector('form > section').classList), 'vl-search-filter__section');
+          assert.include(Array.from(searchFilter.querySelector('form > section > h2').classList), 'vl-search-filter__section-title');
+          assert.include(Array.from(searchFilter.querySelector('form > section > div').classList), 'vl-search-filter__field');
+          assert.include(Array.from(searchFilter.querySelector('form > section > div > label').classList), 'vl-search-filter__field__label');
+          assert.include(Array.from(searchFilter.querySelector('form > div').classList), 'vl-search-filter__field');
+          assert.include(Array.from(searchFilter.querySelector('form ~ div').classList), 'vl-search-filter__footer');
+          done();
+        });
       });
 
       test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
@@ -124,57 +127,63 @@
         assert.equal(formData.get('geslacht'), 'man');
       });
 
-      test('wanneer het mobile-modal attribuut gezet wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', () => {
+      test('wanneer het mobile-modal attribuut gezet wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', (done) => {
         const searchFilter = fixture('vl-search-filter-form-fixture');
-        searchFilter.setAttribute('data-vl-mobile-modal', '');
-
-        assert.isNull(searchFilter._introElement);
+        setTimeout(() => {
+          searchFilter.setAttribute('data-vl-mobile-modal', '');
     
-        const header = searchFilter.children[0];
-        assert.include([...header.classList], 'vl-search-filter__header-modal');
-        assert.notInclude([...header.classList], 'vl-search-filter__footer');
-        assert.equal(header.nodeName, 'DIV');
+          assert.isNull(searchFilter._introElement);
 
-        const title = header.children[0];
-        assert.equal(title.nodeName, 'H2');
-        assert.equal(title.textContent, searchFilter.getAttribute('data-vl-title'));
+          const header = searchFilter.children[0];
+          assert.include([...header.classList], 'vl-search-filter__header-modal');
+          assert.notInclude([...header.classList], 'vl-search-filter__footer');
+          assert.equal(header.nodeName, 'DIV');
 
-        const reset = header.children[1];
-        assert.equal(reset.id, 'reset');
-        assert.include([...reset.classList], 'vl-search-filter__header__clear');
-        assert.isNull(searchFilter._footerElement);
+          const title = header.children[0];
+          assert.equal(title.nodeName, 'H2');
+          assert.equal(title.textContent, searchFilter.getAttribute('data-vl-title'));
 
-        assert.isTrue(searchFilter._submitButton.hasAttribute('data-vl-block'));
-        const container = searchFilter._submitButton.parentElement;
-        assert.include([...container.classList], 'vl-search-filter__footer-modal');
-        assert.notInclude([...container.classList], 'vl-search-filter__field');
-        assert.equal(searchFilter.children[searchFilter.children.length -1], container);
+          const reset = header.children[1];
+          assert.equal(reset.id, 'reset');
+          assert.include([...reset.classList], 'vl-search-filter__header__clear');
+          assert.isNull(searchFilter._footerElement);
+
+          assert.isTrue(searchFilter._submitButton.hasAttribute('data-vl-block'));
+          const container = searchFilter._submitButton.parentElement;
+          assert.include([...container.classList], 'vl-search-filter__footer-modal');
+          assert.notInclude([...container.classList], 'vl-search-filter__field');
+          assert.equal(searchFilter.children[searchFilter.children.length -1], container);
+          done();
+        });
       });
 
-      test('wanneer het data-vl-mobile-modal attribuut verwijderd wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', () => {
+      test('wanneer het data-vl-mobile-modal attribuut verwijderd wordt, zullen de nodige DOM element wijzigingen gebeuren zodat de stijl correct toegepast wordt', (done) => {
         const searchFilter = fixture('vl-search-filter-form-fixture');
-        searchFilter.setAttribute('data-vl-mobile-modal', '');
-        searchFilter.removeAttribute('data-vl-mobile-modal');
+        setTimeout(() => {
+          searchFilter.setAttribute('data-vl-mobile-modal', '');
+          searchFilter.removeAttribute('data-vl-mobile-modal');
 
-        const intro = searchFilter.children[0];
-        assert.equal(intro, searchFilter._introElement);
-        assert.equal(intro.textContent, searchFilter.getAttribute('data-vl-title'));
+          const intro = searchFilter.children[0];
+          assert.equal(intro, searchFilter._introElement);
+          assert.equal(intro.textContent, searchFilter.getAttribute('data-vl-title'));
 
-        assert.isNull(searchFilter._headerElement);
+          assert.isNull(searchFilter._headerElement);
 
-        const footer = searchFilter.children[searchFilter.children.length - 1];
-        const reset = footer.children[0];
-        assert.equal(reset.id, 'reset');
-        assert.notInclude([...reset.classList], 'vl-search-filter__header__clear');
-        assert.notInclude([...footer.classList], 'vl-search-filter__header-modal');
-        assert.include([...footer.classList], 'vl-search-filter__footer');
+          const footer = searchFilter.children[searchFilter.children.length - 1];
+          const reset = footer.children[0];
+          assert.equal(reset.id, 'reset');
+          assert.notInclude([...reset.classList], 'vl-search-filter__header__clear');
+          assert.notInclude([...footer.classList], 'vl-search-filter__header-modal');
+          assert.include([...footer.classList], 'vl-search-filter__footer');
 
-        assert.isFalse(searchFilter._submitButton.hasAttribute('data-vl-block'));
-        const container = searchFilter._submitButton.parentElement;
-        assert.notInclude([...container.classList], 'vl-search-filter__footer-modal');
-        assert.include([...container.classList], 'vl-search-filter__field');
-        assert.notEqual(searchFilter.children[searchFilter.children.length -1], container);
-        assert.equal(container.parentElement, searchFilter._formElement);
+          assert.isFalse(searchFilter._submitButton.hasAttribute('data-vl-block'));
+          const container = searchFilter._submitButton.parentElement;
+          assert.notInclude([...container.classList], 'vl-search-filter__footer-modal');
+          assert.include([...container.classList], 'vl-search-filter__field');
+          assert.notEqual(searchFilter.children[searchFilter.children.length -1], container);
+          assert.equal(container.parentElement, searchFilter._formElement);
+          done();
+        });
       });
 
       test('standaard wordt de titel voor op mobiele toestellen getoond, maar indien niet gedeclareerd wordt de titel of defualt waarde genomen', () => {
@@ -203,6 +212,41 @@
           done();
         });
         searchFilter._submitButton.click();
+      });
+
+      test('er kan dynamisch een form toegevoegd worden', (done) => {
+        const element = fixture('vl-search-filter-fixture');
+        setTimeout(() => {
+          assert.isNull(element._formElement);
+
+          element.insertAdjacentHTML('afterbegin', `
+            <form>
+              <section>
+                <h2>Test</h2>
+                <div>
+                  <label is="form-label">Naam</label>
+                </div>
+              </section>
+              <div>
+                <button is="vl-button" type="submit">Zoeken</button>
+              </div>
+            </form>
+            <div>
+              <a id="reset" href="#" is="vl-link">Zoekopdracht verwijderen</a>
+            </div>
+          `);
+
+          setTimeout(() => {
+            assert.include(Array.from(element.querySelector('form').classList), 'vl-search-filter__form');
+            assert.include(Array.from(element.querySelector('form > section').classList), 'vl-search-filter__section');
+            assert.include(Array.from(element.querySelector('form > section > h2').classList), 'vl-search-filter__section-title');
+            assert.include(Array.from(element.querySelector('form > section > div').classList), 'vl-search-filter__field');
+            assert.include(Array.from(element.querySelector('form > section > div > label').classList), 'vl-search-filter__field__label');
+            assert.include(Array.from(element.querySelector('form > div').classList), 'vl-search-filter__field');
+            assert.include(Array.from(element.querySelector('form ~ div').classList), 'vl-search-filter__footer');
+            done();
+          });
+        });
       });
     });
   </script>
