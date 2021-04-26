@@ -27,14 +27,17 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     return ['alt', 'mobile-modal'];
   }
 
-  connectedCallback() {
-    this.classList.add('vl-search-filter');
-    this.__processForm();
-    this.observer = this.__observer();
+  constructor() {
+    super();
+    this.observer = this.__observeChildElements(() => this.__processClasses());
   }
 
-  __observer() {
-    const observer = new MutationObserver(() => this.__processForm());
+  connectedCallback() {
+    this.classList.add('vl-search-filter');
+  }
+
+  __observeChildElements(callback) {
+    const observer = new MutationObserver(callback);
     observer.observe(this, {childList: true});
     return observer;
   }
@@ -43,19 +46,13 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     this.observer.disconnect();
   }
 
-  __processForm() {
-    this.querySelectorAll('form').forEach(
-        (form) => form.classList.add(`${this._elementPrefix}form`));
-    this.querySelectorAll('form > section').forEach(
-        (section) => section.classList.add(`${this._elementPrefix}section`));
-    this.querySelectorAll('form > section > h2').forEach(
-        (title) => title.classList.add(`${this._elementPrefix}section-title`));
-    this.querySelectorAll('form > section > div').forEach(
-        (field) => field.classList.add(`${this._elementPrefix}field`));
-    this.querySelectorAll('form > section > div > label').forEach(
-        (label) => label.classList.add(`${this._elementPrefix}field__label`));
-    this.querySelectorAll('form > div').forEach(
-        (div) => div.classList.add(`${this._elementPrefix}field`));
+  __processClasses() {
+    this.querySelectorAll('form').forEach((form) => form.classList.add(`${this._elementPrefix}form`));
+    this.querySelectorAll('form > section').forEach((section) => section.classList.add(`${this._elementPrefix}section`));
+    this.querySelectorAll('form > section > h2').forEach((title) => title.classList.add(`${this._elementPrefix}section-title`));
+    this.querySelectorAll('form > section > div').forEach((field) => field.classList.add(`${this._elementPrefix}field`));
+    this.querySelectorAll('form > section > div > label').forEach((label) => label.classList.add(`${this._elementPrefix}field__label`));
+    this.querySelectorAll('form > div').forEach((div) => div.classList.add(`${this._elementPrefix}field`));
 
     if (this._footerElement) {
       this._footerElement.classList.add(`${this._elementPrefix}footer`);
