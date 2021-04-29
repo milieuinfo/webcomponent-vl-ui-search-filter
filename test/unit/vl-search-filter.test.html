@@ -147,8 +147,8 @@
           setTimeout(() => {
             assert.equal(searchFilter.querySelectorAll('h2').length, 1);
             done();
-          })
-        })
+          });
+        });
       });
 
       test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
@@ -299,12 +299,12 @@
 
       test('indien geen data-vl-submit attribuut, geef laatste button als submitButton terug', () => {
         const withoutAttribute = fixture('vl-search-filter-multiple-buttons-fixture');
-        assert.equal(withoutAttribute._submitButton.id, "zoeken-1");
+        assert.equal(withoutAttribute._submitButton.id, 'zoeken-1');
       });
 
       test('indien data-vl-submit attribuut aanwezig, geef button met overeenkomstig id als submitButton terug', () => {
         const withAttribute = fixture('vl-search-filter-multiple-buttons-data-vl-submit-fixture');
-        assert.equal(withAttribute._submitButton.id, "niet-zoeken-2");
+        assert.equal(withAttribute._submitButton.id, 'niet-zoeken-2');
       });
     });
   </script>
