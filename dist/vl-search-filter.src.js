@@ -13,6 +13,7 @@ import 'vl-ui-titles';
  * @property {string} data-vl-mobile-modal - Activeert geoptimaliseerde weergave voor op mobiele toestellen.
  * @property {string} [data-vl-mobile-modal-title=Filter] - De titel van deze search filter op mobiele toestellen indien niet gedeclareerd wordt het data-vl-title attribuut of de default genomen.
  * @property {string} data-vl-title - De titel van deze search filter.
+ * @property {string} data-vl-submit - De id van de knop die voor submit van de form van deze search filter wordt gebruikt.
  *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-search-filter/issues|Issues}
@@ -33,6 +34,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   }
 
   connectedCallback() {
+    this.__processClasses();
     this.classList.add('vl-search-filter');
   }
 
@@ -104,14 +106,23 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   }
 
   get _submitButton() {
-    let button;
+    if (this.getAttribute('data-vl-submit')) {
+      return this.__submitButton(`#${this.getAttribute('data-vl-submit')}`);
+    }
+    return this.__submitButton('button:last-child');
+  }
+
+  __submitButton(selector) {
     if (this._formElement) {
-      button = this._formElement.querySelector('button');
+      const button = this._formElement.querySelector(selector);
+      if (button) {
+        return button;
+      }
     }
-    if (!button && this._footerModalElement) {
-      button = this._footerModalElement.querySelector('button');
+    if (this._footerModalElement) {
+      return this._footerModalElement.querySelector(selector);
     }
-    return button;
+    return null;
   }
 
   get _title() {
@@ -193,8 +204,8 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   __convertHeaderTitleToIntro() {
     if (this._title) {
       this.insertBefore(this.__createTitleElement(), this.firstChild);
-      this._mobileModalTitleElement.remove();
     }
+    this._mobileModalTitleElement.remove();
   }
 
   __convertHeaderToFooter() {
