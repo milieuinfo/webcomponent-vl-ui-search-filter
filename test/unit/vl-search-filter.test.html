@@ -71,6 +71,40 @@
     </template>
   </test-fixture>
 
+  <test-fixture id="vl-search-filter-multiple-buttons-fixture">
+    <template>
+      <div is="vl-search-filter">
+        <form>
+          <div>
+            <button id="niet-zoeken-1" is="vl-button" type="submit">
+              Niet-Zoeken
+            </button>
+            <button id="zoeken-1" is="vl-button" type="submit">
+              Zoeken
+            </button>
+          </div>
+        </form>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="vl-search-filter-multiple-buttons-data-vl-submit-fixture">
+    <template>
+      <div is="vl-search-filter" data-vl-submit="niet-zoeken-2">
+        <form>
+          <div>
+            <button id="niet-zoeken-2" is="vl-button" type="submit">
+              Niet-Zoeken
+            </button>
+            <button id="zoeken-2" is="vl-button" type="submit">
+              Zoeken
+            </button>
+          </div>
+        </form>
+      </div>
+    </template>
+  </test-fixture>
+
   <script>
     suite('vl-search-filter', () => {
       test('heeft de vl-search-filter class', () => {
@@ -101,6 +135,20 @@
           assert.include(Array.from(searchFilter.querySelector('form ~ div').classList), 'vl-search-filter__footer');
           done();
         });
+      });
+
+      test('als de title niet toegevoegd wordt, en de modal view 2x wordt geopend, wordt de title maar 1x gezet', (done) => {
+        const searchFilter = fixture('vl-search-filter-fixture');
+        searchFilter.toggleAttribute('data-vl-mobile-modal');
+        setTimeout(() => {
+          assert.equal(searchFilter.querySelectorAll('h2').length, 1);
+          searchFilter.toggleAttribute('data-vl-mobile-modal');
+          searchFilter.toggleAttribute('data-vl-mobile-modal');
+          setTimeout(() => {
+            assert.equal(searchFilter.querySelectorAll('h2').length, 1);
+            done();
+          })
+        })
       });
 
       test('als de title toegevoegd wordt, zal er een p tag toegevoegd worden', () => {
@@ -247,6 +295,16 @@
             done();
           });
         });
+      });
+
+      test('indien geen data-vl-submit attribuut, geef laatste button als submitButton terug', () => {
+        const withoutAttribute = fixture('vl-search-filter-multiple-buttons-fixture');
+        assert.equal(withoutAttribute._submitButton.id, "zoeken-1");
+      });
+
+      test('indien data-vl-submit attribuut aanwezig, geef button met overeenkomstig id als submitButton terug', () => {
+        const withAttribute = fixture('vl-search-filter-multiple-buttons-data-vl-submit-fixture');
+        assert.equal(withAttribute._submitButton.id, "niet-zoeken-2");
       });
     });
   </script>
