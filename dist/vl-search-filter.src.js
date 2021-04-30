@@ -109,18 +109,30 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
     if (this.getAttribute('data-vl-submit')) {
       return this.__submitButton(`#${this.getAttribute('data-vl-submit')}`);
     }
-    return this.__submitButton('button:last-child');
+    // Not the same as 'button:last-child' selector
+    return this.__submitButton('button', true);
   }
 
-  __submitButton(selector) {
+  __submitButton(selector, findLast = false) {
     if (this._formElement) {
-      const button = this._formElement.querySelector(selector);
+      let button;
+      if (findLast) {
+        const buttons = this._formElement.querySelectorAll(selector);
+        button = buttons[buttons.length-1];
+      } else {
+        button = this._formElement.querySelector(selector);
+      }
       if (button) {
         return button;
       }
     }
     if (this._footerModalElement) {
-      return this._footerModalElement.querySelector(selector);
+      if (findLast) {
+        const buttons = this._footerModalElement.querySelectorAll(selector);
+        return buttons[buttons.length-1];
+      } else {
+        return this._footerModalElement.querySelector(selector);
+      }
     }
     return null;
   }
