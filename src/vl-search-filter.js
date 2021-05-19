@@ -34,6 +34,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
 
   connectedCallback() {
     this.classList.add('vl-search-filter');
+    this.__processClasses();
   }
 
   __observeChildElements(callback) {
