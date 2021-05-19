@@ -248,6 +248,20 @@
           });
         });
       });
+
+      test('als de title niet toegevoegd wordt, en de modal view 2x wordt geopend, wordt de title maar 1x gezet', (done) => {
+        const searchFilter = fixture('vl-search-filter-fixture');
+        searchFilter.toggleAttribute('data-vl-mobile-modal');
+        setTimeout(() => {
+          assert.equal(searchFilter.querySelectorAll('h2').length, 1);
+          searchFilter.toggleAttribute('data-vl-mobile-modal');
+          searchFilter.toggleAttribute('data-vl-mobile-modal');
+          setTimeout(() => {
+            assert.equal(searchFilter.querySelectorAll('h2').length, 1);
+            done();
+          });
+        });
+      });
     });
   </script>
 </body>

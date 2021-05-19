@@ -193,6 +193,9 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   __convertHeaderTitleToIntro() {
     if (this._title) {
       this.insertBefore(this.__createTitleElement(), this.firstChild);
+    }
+
+    if (this._mobileModalTitleElement) {
       this._mobileModalTitleElement.remove();
     }
   }
