@@ -107,7 +107,7 @@ export class VlSearchFilter extends nativeVlElement(HTMLDivElement) {
   get _submitButton() {
     let button;
     if (this._formElement) {
-      button = this._formElement.querySelector('button');
+      button = this._formElement.querySelector(':scope > div button[type="submit"]');
     }
     if (!button && this._footerModalElement) {
       button = this._footerModalElement.querySelector('button');
