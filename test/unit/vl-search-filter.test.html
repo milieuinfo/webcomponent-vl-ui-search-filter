@@ -33,8 +33,11 @@
             </div>
           </section>
           <div>
-            <button is="vl-button" type="submit">
+            <button id="submit-button" is="vl-button" type="submit">
               Zoeken
+            </button>
+            <button id="button" is="vl-button">
+              Secundaire actie
             </button>
           </div>
         </form>
@@ -272,6 +275,12 @@
             done();
           });
         });
+      });
+
+      test('uitsluitend de button met type submit zal fungeren als submit button', () => {
+        const searchFilter = fixture('vl-search-filter-form-fixture');
+        assert.notEqual(searchFilter._submitButton, searchFilter.querySelector('#button'));
+        assert.equal(searchFilter._submitButton, searchFilter.querySelector('#submit-button'));
       });
 
       const assertClasses = (searchFilter) => {
