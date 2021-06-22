@@ -10,6 +10,10 @@ describe('vl-search-filter', async () => {
     return vlSearchFilterPage.load();
   });
 
+  it('WCAG', async () => {
+    await assert.eventually.isFalse(vlSearchFilterPage.hasWcagIssues());
+  });
+
   it('Als gebruiker kan ik de titel van een search filter opvragen', async () => {
     const vlSearchFilter = await vlSearchFilterPage.getSearchFilter();
     await assert.eventually.equal(vlSearchFilter.getTitleText(), 'VERFIJN UW ZOEKOPDRACHT');
