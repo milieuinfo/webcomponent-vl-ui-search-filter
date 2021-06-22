@@ -37,7 +37,7 @@
     "demo": "http-server"
   },
   "dependencies": {
-    "vl-ui-core": "^7.2.1",
+    "vl-ui-core": "^7.2.4",
     "vl-ui-titles": "^3.1.1"
   },
   "peerDependencies": {
@@ -45,15 +45,17 @@
     "vl-ui-titles": "^3.1.1"
   },
   "devDependencies": {
-    "@govflanders/vl-ui-core": "^4.1.17",
+    "@govflanders/vl-ui-core": "^4.1.24",
     "@govflanders/vl-ui-search-filter": "^3.12.17",
     "@govflanders/vl-ui-titles": "^3.12.17",
-    "@govflanders/vl-ui-util": "^3.12.17",
+    "@govflanders/vl-ui-util": "^3.12.24",
     "vl-ui-body": "^1.0.8",
     "vl-ui-button": "^5.0.10",
+    "vl-ui-form": "^1.1.2",
     "vl-ui-form-message": "^5.1.0",
-    "vl-ui-input-field": "^3.2.8",
-    "vl-ui-select": "^4.2.1",
-    "vl-ui-util": "^5.3.11"
+    "vl-ui-form-validation": "^4.0.0",
+    "vl-ui-input-field": "^3.2.11",
+    "vl-ui-select": "^4.3.1",
+    "vl-ui-util": "^5.3.13"
   }
 }
